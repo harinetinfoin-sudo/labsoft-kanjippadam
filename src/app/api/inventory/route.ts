@@ -51,7 +51,7 @@ export async function POST(request: Request) {
         entityType: "inventory",
         entityId: created.id,
         actorId: user.id,
-        actorName: `${user.firstName} ${user.lastName}`.trim() || user.email,
+        actorName: (user as any).name}`.trim() || user.email || 'Admin',
         previousValue: null,
         newValue: { categoryName: created.name },
         metadata: { source: "web" },
