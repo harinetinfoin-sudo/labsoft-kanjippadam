@@ -99,7 +99,7 @@ export async function POST(request: Request) {
         entityType: "inventory",
         entityId: created.id,
         actorId: user.id,
-        actorName: `${user.firstName} ${user.lastName}`.trim() || user.email,
+        actorName: (user as any).name || (user as any).email || 'Admin',
         previousValue: { quantity: payload.quantity },
         newValue: { quantity: created.quantity, balanceAfter: created.balanceAfter, transactionType: created.transactionType },
         metadata: { source: "web" },
