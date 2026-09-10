@@ -58,7 +58,7 @@ export async function POST(request: Request) {
       entityType: "patient",
       entityId: patient.patientNumber,
       actorId: user.id,
-      actorName: `${user.firstName} ${user.lastName}`.trim() || user.email,
+      actorName: user.name || user.email || 'Admin',
       previousValue: null,
       newValue: { patientId: patient.id, patientNumber: patient.patientNumber, name: `${patient.firstName} ${patient.lastName}` },
       metadata: { source: "web" },
