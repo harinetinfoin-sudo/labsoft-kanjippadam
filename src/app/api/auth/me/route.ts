@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/nextauth";
 import { findUserByEmail } from "@/lib/auth";
@@ -8,26 +8,29 @@ export async function GET() {
     const session = await getServerSession(authOptions);
     
     if (!session?.user?.email) {
-      return NextResponse.json({ user: null }, { status: 200 });
+      return NextResponse.json({ user: null }, { status: 401 });
     }
 
-    const user = findUserByEmail(session.user.email);
-
+    // FIX: Promise alla, direct object
+    const user: any = findUserByEmail(session.user.email);
+    
     if (!user) {
-      return NextResponse.json({ user: null }, { status: 200 });
+      return NextResponse.json({ user: null }, { status: 404 });
     }
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       user: {
         id: user.id,
         email: user.email,
         name: user.name,
         role: user.role,
+        firstName: user.firstName,
+        lastName: user.lastName,
       }
-    }, { status: 200 });
-    
+    });
+
   } catch (error) {
-    console.error("Error in /api/auth/me:", error);
-    return NextResponse.json({ user: null }, { status: 200 });
+    console.error("Auth me error:", error);
+    return NextResponse.json({ user: null }, { status: 500 });
   }
 }
