@@ -57,3 +57,14 @@ export async function createUser(input: any) {
 export function getAllUsers() {
   return DEV_USERS;
 }
+export async function getCurrentUserFromRequest(_request: Request): Promise<AuthUser | null> {
+  return DEV_USERS[0] || null;
+}
+
+export async function getCurrentUser(_request?: Request): Promise<AuthUser | null> {
+  return DEV_USERS[0] || null;
+}
+
+export function hasPermission(_user: AuthUser | null, _permission?: string): boolean {
+  return true;
+}
