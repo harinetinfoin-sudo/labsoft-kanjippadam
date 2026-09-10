@@ -13,9 +13,8 @@ export async function getUserFromRequest(req?: Request): Promise<AuthUser> {
 }
 
 export function getRolesForApi() {
-  return [{ id: "admin", name: "Admin" }, { id: "doctor", name: "Doctor" }];
+  return [{ id: "admin", name: "Admin" }, { id: "reception", name: "Reception" }, { id: "phlebotomist", name: "Phlebotomist" }, { id: "technician", name: "Technician" }, { id: "doctor", name: "Doctor" }];
 }
-
 export function listUsers() {
   return [];
 }
@@ -27,20 +26,3 @@ export function checkRole() { return true; }
 export const auth = { getUser: getUserFromRequest };
 export default auth;
 // --- FIX: Missing exports for build ---
-export function getRolesForApi() {
-  return [
-    { id: "admin", name: "Admin" },
-    { id: "reception", name: "Reception" },
-    { id: "phlebotomist", name: "Phlebotomist" },
-    { id: "technician", name: "Technician" },
-    { id: "doctor", name: "Doctor" },
-  ];
-}
-
-export function listUsers() {
-  return [];
-}
-
-export function getUsers() {
-  return [];
-}
