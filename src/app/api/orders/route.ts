@@ -63,7 +63,7 @@ export async function POST(request: Request) {
       entityType: "order",
       entityId: order.orderNumber,
       actorId: user.id,
-      actorName: `${user.firstName} ${user.lastName}`.trim() || user.email,
+      actorName: user.name || user.email || 'Admin',
       previousValue: null,
       newValue: { orderId: order.id, orderNumber: order.orderNumber, totalAmount },
       metadata: { source: "web" },
