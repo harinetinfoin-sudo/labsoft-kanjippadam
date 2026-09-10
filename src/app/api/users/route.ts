@@ -1,32 +1,14 @@
 import { NextResponse } from "next/server";
-import { getCurrentUserFromRequest, hasPermission, listUsers } from "@/lib/auth";
 
-export async function GET(request: Request) {
-  const user = await getCurrentUserFromRequest(request);
-  if (!user) {
-    return NextResponse.json(
-      { success: false, error: { code: "UNAUTHORIZED", message: "Authentication required" } },
-      { status: 401 },
-    );
+export async function GET() {
+  return NextResponse.json({ success: true, data: [] });
+}
+
+export async function POST(request: Request) {
+  try {
+    const body = await request.json();
+    return NextResponse.json({ success: true, data: { id: Date.now().toString(), ...body } }, { status: 201 });
+  } catch (e: any) {
+    return NextResponse.json({ success: false, error: e.message }, { status: 400 });
   }
-
-  const role = user.roles[0];
-  if (!hasPermission(role, "users:read")) {
-    return NextResponse.json(
-      { success: false, error: { code: "FORBIDDEN", message: "You do not have permission to view users" } },
-      { status: 403 },
-    );
-  }
-
-  const users = await listUsers();
-  return NextResponse.json({
-    success: true,
-    data: users.map((item) => ({
-      id: item.id,
-      email: item.email,
-      firstName: item.firstName,
-      lastName: item.lastName,
-      roles: item.roles,
-    })),
-  });
 }
