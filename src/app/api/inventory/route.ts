@@ -83,7 +83,7 @@ export async function POST(request: Request) {
         entityType: "inventory",
         entityId: created.id,
         actorId: user.id,
-        actorName: (user as any).name}`.trim() || user.email || 'Admin',
+        actorName: (user as any).name || user.email || 'Admin',
         previousValue: null,
         newValue: { poNumber: created.poNumber, status: created.status },
         metadata: { source: "web" },
