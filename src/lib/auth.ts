@@ -65,6 +65,6 @@ export async function getCurrentUser(_request?: Request): Promise<AuthUser | nul
   return DEV_USERS[0] || null;
 }
 
-export function hasPermission(_user: AuthUser | null, _permission?: string): boolean {
+export function hasPermission(_roleOrUser: any, _permission?: string): boolean {
   return true;
 }
